@@ -9,8 +9,8 @@ For graph algorithms I'm reading graphs in .egr format provided at https://userw
 
 You run the programs like this:
 ```
-nvcc graph-algo.cc example-graph.egr -o outfile
-./outfile
+nvcc graph-algo.cc -o outfile
+./outfile example-graph.egr
 ```
 
 # Outputs
@@ -30,19 +30,23 @@ GPU Weight: 2806989831
 ## BST
 
 ```
-
+CPU Time: 264.073 ms
+GPU Time: 57.9912 ms
+Distances match
 ```
 
 
 ## Prefix Sum
 
 ```
-
+CPU Time: 4.12375 ms
+GPU Time: 0.050656 ms
 ```
 
 ## Vector Addition
 
 ```
-
+CPU time: 48.0333 ms
+GPU time: 6.84749 ms
 ```
 
