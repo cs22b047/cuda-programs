@@ -1,4 +1,3 @@
-%%writefile bfs.cu
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -8,6 +7,8 @@
 #include <random>
 #include <unordered_set>
 #include <algorithm>
+#include "ECLgraph.h"
+
 
 void generate_graph(int n, int m, std::vector<int>& nodes, std::vector<int>& adj_nodes) {
     std::vector<std::unordered_set<int>> adjacency(n);
@@ -107,13 +108,22 @@ void bfs_gpu(int* h_nodes, int* h_adj_nodes, int num_nodes, int num_edges, int s
     cudaMemcpy(h_distance.data(), d_distance, num_nodes*sizeof(int), cudaMemcpyDeviceToHost);
 }
 
-int main() {
-    int num_nodes = 100000;
-    int num_edges = 1000000;
+int main(int argc, char* argv[]) {
+    
+    if (argc < 2) {
+        return 1;
+    }
+
+    const char* filename = argv[1];
+
+    ECLgraph g = readECLgraph(filename);
+
+    int num_nodes = g.nodes;
+    int num_edges = g.edges;
     int source = 0;
 
-    std::vector<int> nodes, adj_nodes;
-    generate_graph(num_nodes, num_edges, nodes, adj_nodes);
+    std::vector<int> nodes(g.nindex, g.nindex + num_nodes + 1);
+    std::vector<int> adj_nodes(g.nlist, g.nlist + num_edges);
 
     std::vector<int> cpu_distance(num_nodes, -1);
     std::vector<int> gpu_distance(num_nodes, -1);
