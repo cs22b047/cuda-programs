@@ -289,11 +289,15 @@ long long mst_gpu(Edge* edges, int numNodes, int totalEdges){
   return h_mst_weight_total;
 }
 
-int main() {
+int main(int argc, char** argv) {
+
+    if (argc < 2) {
+        return 1;
+    }
 
     int numNodes = 0;
     int totalEdges = 0;
-    const char* filename = "rmat22.sym.egr";
+    const char* filename = argv[1];
     ECLgraph g = readECLgraph(filename);
 
     std::cout << "Graph loaded: " << g.nodes << " nodes, " << g.edges << " edges\n";
